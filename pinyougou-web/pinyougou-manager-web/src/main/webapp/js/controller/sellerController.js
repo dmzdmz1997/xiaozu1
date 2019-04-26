@@ -1,11 +1,30 @@
 /** 定义控制器层 */
 app.controller('sellerController', function($scope, $controller, baseService){
-
     /** 指定继承baseController */
     $controller('baseController',{$scope:$scope});
 
+    $scope.arr = ["待审核","已审核","审核未通过","关闭"];
+
+    /** 分页指令配置信息对象  */
+    $scope.paginationConf = {
+        currentPage: 1, // 当前页码
+        totalItems: 0,  // 总记录数
+        itemsPerPage: 10, // 每页显示的记录数
+        perPageOptions: [10, 20, 30], // 页码下拉列表框
+        onChange: function(){ // 改变事件
+            $scope.reload(); //重新加载
+        }
+    };
+    /** 重新加载列表数据 */
+    $scope.reload = function(){
+        /** 切换页码  */
+        $scope.search($scope.paginationConf.currentPage,
+            $scope.paginationConf.itemsPerPage);
+    };
+
+
     /** 查询条件对象 */
-    $scope.searchEntity = {status : '0'};
+    $scope.searchEntity = {};
     /** 分页查询(查询条件) */
     $scope.search = function(page, rows){
         baseService.findByPage("/seller/findByPage", page,
@@ -37,6 +56,7 @@ app.controller('sellerController', function($scope, $controller, baseService){
                 }
         });
     };
+
 
 
 
@@ -85,4 +105,5 @@ app.controller('sellerController', function($scope, $controller, baseService){
             alert("请选择要删除的记录！");
         }
     };
+
 });

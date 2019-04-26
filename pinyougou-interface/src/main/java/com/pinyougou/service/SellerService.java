@@ -34,4 +34,10 @@ public interface SellerService {
 
 	/** 商家审核 */
     void updateStatus(String sellerId, String status);
+
+    String findPassword(String sellerId);
+
+	void updatePassword(String sellerId, String encode);
+
+    List<Seller> findSeller(String sellerId);
 }

@@ -44,7 +44,7 @@ public class SellerServiceImpl implements SellerService {
 
     @Override
     public void update(Seller seller) {
-
+        sellerMapper.updateByPrimaryKeySelective(seller);
     }
 
     @Override
@@ -90,6 +90,29 @@ public class SellerServiceImpl implements SellerService {
             sellerMapper.updateStatus(sellerId, status);
         }catch (Exception ex){
             throw new RuntimeException(ex);
+        }
+    }
+
+    @Override
+    public String findPassword(String sellerId) {
+          return sellerMapper.findPassword(sellerId);
+    }
+
+    @Override
+    public void updatePassword(String sellerId,String encode) {
+        try {
+            sellerMapper.updatePassword(sellerId,encode);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public List<Seller> findSeller(String sellerId) {
+        try {
+            return sellerMapper.findSeller(sellerId);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 }

@@ -18,28 +18,32 @@ app.controller('sellerController', function($scope, $controller, baseService){
                 }
             });
     };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    //查询原密码
+   $scope.findpassword=function () {
+       baseService.sendPost("/seller/findpassword?oldPassWord="+$scope.oldPassWord).then(
+           function (respson) {
+               if (!respson.data){
+                   alert("原密码不正确");
+               }
+           }
+       );
+ };
+    //修改密码
+    $scope.update=function () {
+        if ($scope.newPassWord==$scope.comfirnewPassWord){
+            //修改密码
+            baseService.sendPost("/seller/update?newpassword="+$scope.newPassWord).then(function (respson) {
+                if (respson.data){
+                    /** 跳转到登录页面 */
+                    location.href = "/shoplogin.html";
+                }else {
+                    alert("修改失败")
+                }
+            });
+        }else {
+            alert("密码不一致")
+        }
+    };
 
     /** 查询条件对象 */
     $scope.searchEntity = {};
@@ -77,4 +81,25 @@ app.controller('sellerController', function($scope, $controller, baseService){
             alert("请选择要删除的记录！");
         }
     };
+
+    //查询商家信息
+    $scope.findSeller=function () {
+        baseService.sendGet("/seller/findSeller",$scope.seller).then(function (respson) {
+           if (respson.data){
+               $scope.dataList=respson.data;
+           }
+        });
+    };
+
+    //修改商家信息
+    $scope.updateSeller=function () {
+        baseService.sendPost("/seller/updateSeller",$scope.dataList[0]).then(function (respson) {
+            if (respson.data){
+                $scope.findSeller();
+                alert("修改成功");
+            }else {
+                alert("修改失败");
+            }
+        })
+    }
 });
