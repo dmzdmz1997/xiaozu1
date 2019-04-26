@@ -2,7 +2,13 @@ package com.pinyougou.user.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.pinyougou.mapper.AddressMapper;
+import com.pinyougou.mapper.AreasMapper;
+import com.pinyougou.mapper.CitiesMapper;
+import com.pinyougou.mapper.ProvincesMapper;
 import com.pinyougou.pojo.Address;
+import com.pinyougou.pojo.Areas;
+import com.pinyougou.pojo.Cities;
+import com.pinyougou.pojo.Provinces;
 import com.pinyougou.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,10 +30,16 @@ public class AddressServiceImpl implements AddressService {
 
     @Autowired
     private AddressMapper addressMapper;
+    @Autowired
+    private CitiesMapper citiesMapper;
+    @Autowired
+    private ProvincesMapper provincesMapper;
+    @Autowired
+    private AreasMapper areasMapper;
 
     @Override
     public void save(Address address) {
-
+        addressMapper.insert(address);
     }
 
     @Override
@@ -52,8 +64,24 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public List<Address> findAll() {
-        return null;
+        List<Address> addressList = addressMapper.selectAll();
+        for (Address address : addressList) {
+            /** 把cities封装到address */
+            String cityId = address.getCityId();
+            Cities cities = citiesMapper.findOne(cityId);
+            address.setCities(cities);
+            /** 把provinces封装到address */
+            String provinceId = address.getProvinceId();
+            Provinces provinces = provincesMapper.findOne(provinceId);
+            address.setProvinces(provinces);
+            /** 把area封装到address */
+            String townId = address.getTownId();
+            Areas areas = areasMapper.findOne(townId);
+            address.setAreas(areas);
+        }
+        return addressList;
     }
+
 
     @Override
     public List<Address> findByPage(Address address, int page, int rows) {
@@ -78,4 +106,6 @@ public class AddressServiceImpl implements AddressService {
             throw new RuntimeException(ex);
         }
     }
+
+
 }

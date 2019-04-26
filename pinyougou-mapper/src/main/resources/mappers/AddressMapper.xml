@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.pinyougou.mapper.AddressMapper">
 
+	<!--<select id="findDetailedAddress" resultType="DetailedAddress">-->
+		<!--SELECT a.contact 姓名,a.address 地址, a.is_default 默认地址, a.mobile 电话, p.province 省, c.city 市, ar.area 区 FROM tb_address AS a-->
+<!--INNER JOIN tb_provinces p on a.province_id = p.provinceid-->
+<!--INNER JOIN tb_cities c ON a.city_id =  c.cityid-->
+<!--INNER JOIN tb_areas ar ON a.town_id = ar.areaid;-->
+	<!--</select>-->
 </mapper>

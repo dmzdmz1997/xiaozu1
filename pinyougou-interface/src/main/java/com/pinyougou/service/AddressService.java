@@ -1,6 +1,7 @@
 package com.pinyougou.service;
 
 import com.pinyougou.pojo.Address;
+
 import java.util.List;
 import java.io.Serializable;
 /**
@@ -34,4 +35,4 @@ public interface AddressService {
 	/** 根据登录用户名获取收件地址列表 */
     List<Address> findAddressByUser(String userId);
 
-}
+ }
