@@ -15,6 +15,7 @@ import java.util.List;
 public class Cart implements Serializable{
     /** 商家ID */
     private String sellerId;
+    private String sellerId1111;
     /** 商家名称 */
     private String sellerName;
     /** 购物车明细集合 */
