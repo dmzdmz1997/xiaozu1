@@ -44,7 +44,6 @@ public class GoodsController {
     @PostMapping("/save")
     public boolean save(@RequestBody Goods goods){
         try{
-			System.out.println(1111);
             // 获取登录用户名
             String sellerId = SecurityContextHolder.getContext()
                     .getAuthentication().getName();
