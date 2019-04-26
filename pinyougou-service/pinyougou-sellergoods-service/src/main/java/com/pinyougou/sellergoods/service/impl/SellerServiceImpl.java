@@ -92,4 +92,18 @@ public class SellerServiceImpl implements SellerService {
             throw new RuntimeException(ex);
         }
     }
+
+    @Override
+    public String findPassword(String sellerId) {
+          return sellerMapper.findPassword(sellerId);
+    }
+
+    @Override
+    public void updatePassword(String sellerId,String encode) {
+        try {
+            sellerMapper.updatePassword(sellerId,encode);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

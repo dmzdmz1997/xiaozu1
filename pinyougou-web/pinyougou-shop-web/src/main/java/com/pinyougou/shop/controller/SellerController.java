@@ -4,6 +4,8 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.pinyougou.pojo.Seller;
 import com.pinyougou.service.SellerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,6 +38,40 @@ public class SellerController {
             return true;
         }catch (Exception ex){
             ex.printStackTrace();
+        }
+        return false;
+    }
+
+    @PostMapping("/findpassword")
+    public boolean findpassword(String oldPassWord){
+        // 获取安全上下文对象
+        SecurityContext context = SecurityContextHolder.getContext();
+        // 获取用户名
+        String sellerId = context.getAuthentication().getName();
+        try {
+            String password=sellerService.findPassword(sellerId);
+            boolean n = passwordEncoder.matches(oldPassWord, password);
+            return n;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    @PostMapping("/update")
+    public boolean update(String newpassword){
+        System.out.println("+++++++++"+newpassword);
+        // 获取安全上下文对象
+        SecurityContext context = SecurityContextHolder.getContext();
+        // 获取用户名
+        String sellerId = context.getAuthentication().getName();
+        try {
+            String encode = passwordEncoder.encode(newpassword);
+            System.out.println("++++++++++"+encode);
+            sellerService.updatePassword(sellerId,encode);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return false;
     }

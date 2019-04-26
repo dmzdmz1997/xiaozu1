@@ -2,6 +2,7 @@ package com.pinyougou.mapper;
 
 import com.pinyougou.pojo.Seller;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import tk.mybatis.mapper.common.Mapper;
 
@@ -21,4 +22,12 @@ public interface SellerMapper extends Mapper<Seller>{
     @Update("UPDATE tb_seller SET STATUS = #{status} WHERE seller_id = #{sellerId}")
     void updateStatus(@Param("sellerId") String sellerId,
                       @Param("status")String status);
+
+    //查询密码
+    @Select("SELECT password from tb_seller WHERE seller_id = #{sellerId}")
+    String findPassword(String sellerId);
+
+    //修改密码
+    @Update("UPDATE tb_seller set password=#{encode} WHERE seller_id= #{sellerId}")
+    void updatePassword(@Param("sellerId") String sellerId, @Param("encode") String encode );
 }

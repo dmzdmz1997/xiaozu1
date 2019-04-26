@@ -18,28 +18,32 @@ app.controller('sellerController', function($scope, $controller, baseService){
                 }
             });
     };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    //查询原密码
+   $scope.findpassword=function () {
+       baseService.sendPost("/seller/findpassword?oldPassWord="+$scope.oldPassWord).then(
+           function (respson) {
+               if (!respson.data){
+                   alert("原密码不正确");
+               }
+           }
+       );
+ };
+    //修改密码
+    $scope.update=function () {
+        if ($scope.newPassWord==$scope.comfirnewPassWord){
+            //修改密码
+            baseService.sendPost("/seller/update?newpassword="+$scope.newPassWord).then(function (respson) {
+                if (respson.data){
+                    /** 跳转到登录页面 */
+                    location.href = "/shoplogin.html";
+                }else {
+                    alert("修改失败")
+                }
+            });
+        }else {
+            alert("密码不一致")
+        }
+    };
 
     /** 查询条件对象 */
     $scope.searchEntity = {};
