@@ -81,4 +81,25 @@ app.controller('sellerController', function($scope, $controller, baseService){
             alert("请选择要删除的记录！");
         }
     };
+
+    //查询商家信息
+    $scope.findSeller=function () {
+        baseService.sendGet("/seller/findSeller",$scope.seller).then(function (respson) {
+           if (respson.data){
+               $scope.dataList=respson.data;
+           }
+        });
+    };
+
+    //修改商家信息
+    $scope.updateSeller=function () {
+        baseService.sendPost("/seller/updateSeller",$scope.dataList[0]).then(function (respson) {
+            if (respson.data){
+                $scope.findSeller();
+                alert("修改成功");
+            }else {
+                alert("修改失败");
+            }
+        })
+    }
 });

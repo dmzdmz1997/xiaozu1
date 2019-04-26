@@ -38,4 +38,6 @@ public interface SellerService {
     String findPassword(String sellerId);
 
 	void updatePassword(String sellerId, String encode);
+
+    List<Seller> findSeller(String sellerId);
 }
