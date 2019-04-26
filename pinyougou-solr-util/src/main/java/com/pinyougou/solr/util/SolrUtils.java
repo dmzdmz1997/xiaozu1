@@ -1,4 +1,4 @@
-package com.pinyougou.solr.util;
+﻿package com.pinyougou.solr.util;
 
 import com.alibaba.fastjson.JSON;
 import com.pinyougou.mapper.ItemMapper;
@@ -31,7 +31,9 @@ public class SolrUtils {
     private SolrTemplate solrTemplate;
 
 
-    /** 把数据导入到索引库 */
+    /** 把数据导入到索引库 
+    sssss
+    */
     public void importDataToSolr(){
 
         // 1. 查询tb_item表中的数据
