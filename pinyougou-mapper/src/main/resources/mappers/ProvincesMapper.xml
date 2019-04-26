@@ -5,4 +5,11 @@
 
 <mapper namespace="com.pinyougou.mapper.ProvincesMapper">
 
+	<select id="findOne" resultType="Provinces">
+		SELECT * FROM tb_provinces WHERE provinceid = #{provinceId}
+	</select>
+
+	<select id="findAllProvinces" resultType="Provinces">
+		SELECT * FROM tb_provinces
+	</select>
 </mapper>

@@ -3,6 +3,7 @@ package com.pinyougou.pojo;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Table(name="tb_address")
 public class Address implements Serializable{
@@ -33,6 +34,36 @@ public class Address implements Serializable{
     private Date createDate;
 	@Column(name="alias")
     private String alias;
+    @Transient
+	private Cities cities;
+    @Transient
+    private Provinces provinces;
+    @Transient
+    private Areas areas;
+
+    public Areas getAreas() {
+        return areas;
+    }
+
+    public void setAreas(Areas areas) {
+        this.areas = areas;
+    }
+
+    public Provinces getProvinces() {
+        return provinces;
+    }
+
+    public void setProvinces(Provinces provinces) {
+        this.provinces = provinces;
+    }
+
+    public Cities getCities() {
+        return cities;
+    }
+
+    public void setCities(Cities cities) {
+        this.cities = cities;
+    }
 
     public Long getId() {
         return id;

@@ -24,11 +24,15 @@ public interface CitiesService {
 
 	/** 根据主键id查询 */
 	Cities findOne(Serializable id);
+	/** 根据主键id查询 */
+	Cities findOne(String citiesId);
 
 	/** 查询全部 */
 	List<Cities> findAll();
+	List<Cities> findAllCities();
 
 	/** 多条件分页查询 */
 	List<Cities> findByPage(Cities cities, int page, int rows);
 
+    List<Cities> findCitiesByProvinceId(String parentId);
 }

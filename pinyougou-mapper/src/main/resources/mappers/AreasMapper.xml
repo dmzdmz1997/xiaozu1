@@ -5,4 +5,15 @@
 
 <mapper namespace="com.pinyougou.mapper.AreasMapper">
 
+	<select id="findOne" resultType="Areas">
+		SELECT * FROM tb_areas WHERE areaid = #{areaId}
+	</select>
+
+	<select id="findAllAreas" resultType="Areas">
+		SELECT * FROM tb_areas
+	</select>
+
+    <select id="findAreasByCityId" resultType="Areas">
+        SELECT * FROM tb_areas WHERE cityId = #{cityId}
+    </select>
 </mapper>

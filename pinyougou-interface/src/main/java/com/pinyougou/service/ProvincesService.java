@@ -28,7 +28,10 @@ public interface ProvincesService {
 	/** 查询全部 */
 	List<Provinces> findAll();
 
+	List<Provinces> findAllProvinces();
+
 	/** 多条件分页查询 */
 	List<Provinces> findByPage(Provinces provinces, int page, int rows);
 
+	Provinces findOne(String provinceId);
 }

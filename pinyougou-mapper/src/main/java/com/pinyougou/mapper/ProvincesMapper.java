@@ -14,7 +14,12 @@ import java.util.List;
  */
 public interface ProvincesMapper extends Mapper<Provinces>{
 
+    Provinces findOne(String provinceId);
 
+    /** 查询全部 */
+    List<Provinces> findAll();
+
+    List<Provinces> findAllProvinces();
 
     @Select("select provinceid as provinceId,province from tb_provinces order by id asc")
     List<Provinces> findProvincesByProvinceId();
