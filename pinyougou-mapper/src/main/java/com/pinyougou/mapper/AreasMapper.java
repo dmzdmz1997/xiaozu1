@@ -22,6 +22,6 @@ public interface AreasMapper extends Mapper<Areas>{
     List<Areas> findAll();
 
     List<Areas> findAllAreas();
-
+    @Select("SELECT * FROM tb_areas WHERE cityid =#{cityId} ")
     List<Areas> findAreasByCityId(String parentId);
 }
