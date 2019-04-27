@@ -34,4 +34,7 @@ public interface SellerMapper extends Mapper<Seller>{
     //查询商家信息
     @Select("SELECT * FROM tb_seller WHERE seller_id=#{sellerId}")
     List<Seller> findSeller(String sellerId);
+
+    @Select("select name from tb_seller where seller_id=#{sellerId}")
+    String selectBysellerId(String sellerId);
 }

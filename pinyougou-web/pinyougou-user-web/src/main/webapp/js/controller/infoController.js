@@ -73,4 +73,5 @@ app.controller('infoController',function ($scope,$controller,baseService) {
             }
         });
     };
+
 });

@@ -1,5 +1,6 @@
 package com.pinyougou.mapper;
 
+import org.apache.ibatis.annotations.Select;
 import tk.mybatis.mapper.common.Mapper;
 
 import com.pinyougou.pojo.Item;
@@ -11,6 +12,6 @@ import com.pinyougou.pojo.Item;
  */
 public interface ItemMapper extends Mapper<Item>{
 
-
-
+    @Select("select spec from tb_item where id=#{itemId}")
+    String selectSpecById(Long itemId);
 }

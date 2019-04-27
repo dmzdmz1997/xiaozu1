@@ -2,12 +2,12 @@ package com.pinyougou.user.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.alibaba.fastjson.JSON;
+import com.github.pagehelper.ISelect;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.pinyougou.common.util.HttpClientUtils;
 import com.pinyougou.mapper.*;
-import com.pinyougou.pojo.Areas;
-import com.pinyougou.pojo.Cities;
-import com.pinyougou.pojo.Provinces;
-import com.pinyougou.pojo.User;
+import com.pinyougou.pojo.*;
 import com.pinyougou.service.UserService;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +47,16 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private AreasMapper areasMapper;
 
+    @Autowired
+    private OrderMapper orderMapper;
+    @Autowired
+    private PayLogMapper payLogMapper;
+    @Autowired
+    private SellerMapper sellerMapper;
+    @Autowired
+    private OrderItemMapper orderItemMapper;
+    @Autowired
+    private ItemMapper itemMapper;
     @Override
     public void save(User user) {
         try{
@@ -177,4 +187,53 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException(e);
         }
     }
+
+    /**
+     * 根据登录的用户查找用户所有订单
+     */
+    @Override
+    public List<Map<String, Object>> findOrdersByUserId(String userId, Integer page, Integer rows) {
+        List<Map<String, Object>> resultMap = new ArrayList<>();
+        PageInfo<Object> pageInfo = PageHelper.startPage(page, rows).doSelectPageInfo(new ISelect() {
+            @Override
+            public void doSelect() {
+                //查询order表数据
+                List<Order> orderList = orderMapper.selectByUserId(userId);
+                for (Order order : orderList) {
+                    /**查询订单日志表单号，商家店铺名称*/
+                    String outTradeNo = payLogMapper.selectByOrderId(order.getOrderId());
+                    String SellerName = sellerMapper.selectBysellerId(order.getSellerId());
+                    order.setOutTradeNo(outTradeNo);
+                    order.setSellerName(SellerName);
+                    //从orderItem表中查询关联order表的数据，
+                    List<OrderItem> orderItems = orderItemMapper.selectByOrderId(order.getOrderId());
+                    for (OrderItem orderItem : orderItems) {
+                        //从item表中查询规格数据
+                        String spec = itemMapper.selectSpecById(orderItem.getItemId());
+                        orderItem.setSpec(spec);
+                    }
+                    order.setOrderItems(orderItems);
+                }
+            }
+        });
+        Map<String, Object> pages = new HashMap<>();
+        pages.put("totalPages", pageInfo.getPages());
+        Map<String, Object> orders = new HashMap<>();
+        orders.put("orders", pageInfo.getList());
+        resultMap.add(pages);
+        resultMap.add(orders);
+        return resultMap;
+    }
+
+    /**
+     * 根据订单号查找订单金额
+     */
+    @Override
+    public Long findOrderTotalFee(String orderId) {
+        PayLog payLog=new PayLog();
+        payLog.setOutTradeNo(orderId);
+        List<PayLog> payLogList = payLogMapper.select(payLog);
+        return payLogList.get(0).getTotalFee();
+    }
+
 }

@@ -30,6 +30,17 @@ public class OrderItem implements Serializable{
     private String picPath;
 	@Column(name="seller_id")
     private String sellerId;
+    /**规格数据*/
+    @Transient
+    private String spec;
+
+    public String getSpec() {
+        return spec;
+    }
+
+    public void setSpec(String spec) {
+        this.spec = spec;
+    }
 
     public Long getId() {
         return id;

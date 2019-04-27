@@ -6,6 +6,8 @@ import com.pinyougou.pojo.Provinces;
 import com.pinyougou.pojo.User;
 import java.util.List;
 import java.io.Serializable;
+import java.util.Map;
+
 /**
  * UserService 服务接口
  * @date 2019-03-28 09:58:00
@@ -49,4 +51,8 @@ public interface UserService {
 	User findInfoByUserId(String userId);
 
 	void saveUserInfo(User user);
+
+    List<Map<String, Object>> findOrdersByUserId(String userId, Integer page, Integer rows);
+
+    Long findOrderTotalFee(String orderId);
 }
