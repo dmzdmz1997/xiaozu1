@@ -11,13 +11,16 @@
     <script src="/plugins/angularjs/angular.min.js"></script>
     <script src="/js/base.js"></script>
     <script src="/js/service/baseService.js"></script>
-    <script src="/js/controller/indexController.js"></script>
-
+    <script src="js/controller/baseController.js"></script>
+    <script src="/js/controller/infoController.js"></script>
+    <link rel="stylesheet" href="My97DatePicker/skin/WdatePicker.css">
+    <script src="My97DatePicker/WdatePicker.js"></script>
+    <script src="js/controller/indexController.js"></script>
 
 </head>
 <body ng-app="pinyougou"
-      ng-controller="indexController"
-      ng-init="showName()">
+      ng-controller="infoController"
+      ng-init="showName();findProvince();findInfo();">
     <!-- 头部栏位 -->
     <!--页面顶部-->
 <div id="nav-bottom">
@@ -155,7 +158,7 @@ $(function(){
                 <!--左侧列表-->
                 <div class="yui3-u-1-6 list">
                     <div class="person-info">
-                        <div class="person-photo"><img src="img/_/photo.png" alt=""></div>
+                        <div class="person-photo"><img width="100" height="100" src="{{user.headPic}}" alt=""></div>
                         <div class="person-account">
                             <span class="name">{{loginName}}</span>
                             <span class="safe"><a href="/logout">退出登录 </a></span>

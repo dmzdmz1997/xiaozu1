@@ -1,5 +1,6 @@
 package com.pinyougou.mapper;
 
+import org.apache.ibatis.annotations.Select;
 import tk.mybatis.mapper.common.Mapper;
 
 import com.pinyougou.pojo.Provinces;
@@ -20,4 +21,6 @@ public interface ProvincesMapper extends Mapper<Provinces>{
 
     List<Provinces> findAllProvinces();
 
+    @Select("select provinceid as provinceId,province from tb_provinces order by id asc")
+    List<Provinces> findProvincesByProvinceId();
 }

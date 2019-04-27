@@ -3,7 +3,10 @@ package com.pinyougou.user.service.impl;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.alibaba.fastjson.JSON;
 import com.pinyougou.common.util.HttpClientUtils;
-import com.pinyougou.mapper.UserMapper;
+import com.pinyougou.mapper.*;
+import com.pinyougou.pojo.Areas;
+import com.pinyougou.pojo.Cities;
+import com.pinyougou.pojo.Provinces;
 import com.pinyougou.pojo.User;
 import com.pinyougou.service.UserService;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -37,6 +40,12 @@ public class UserServiceImpl implements UserService {
     private String templateCode;
     @Autowired
     private RedisTemplate redisTemplate;
+    @Autowired
+    private ProvincesMapper provincesMapper;
+    @Autowired
+    private CitiesMapper citiesMapper;
+    @Autowired
+    private AreasMapper areasMapper;
 
     @Override
     public void save(User user) {
@@ -129,5 +138,43 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException(ex);
         }
     }
+    /**查询所有省*/
+    @Override
+    public List<Provinces> findProvince() {
+        return provincesMapper.findProvincesByProvinceId();
+    }
+    @Override
+    public List<Cities> findCityByProvinceId(String provinceId) {
+        try {
+            return citiesMapper.findCityByProvinceId(provinceId);
 
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+    @Override
+    public List<Areas> findAreaByCityId(String cityId) {
+        try {
+            return areasMapper.findAreaByCityId(cityId);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+    @Override
+    public User findInfoByUserId(String username) {
+        try {
+            return userMapper.findByUserId(username);
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+    @Override
+    public void saveUserInfo(User user) {
+        try {
+            userMapper.updateByUsername(user);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

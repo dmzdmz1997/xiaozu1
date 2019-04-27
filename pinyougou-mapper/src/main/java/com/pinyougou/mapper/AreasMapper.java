@@ -14,6 +14,8 @@ import java.util.List;
  */
 public interface AreasMapper extends Mapper<Areas>{
 
+    @Select("select areaid as areaId,area from tb_areas where cityid = #{cityId}")
+    List<Areas> findAreaByCityId(String cityId);
     Areas findOne(String areaid);
 
     /** 查询全部 */

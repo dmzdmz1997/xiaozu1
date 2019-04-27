@@ -1,5 +1,8 @@
 package com.pinyougou.service;
 
+import com.pinyougou.pojo.Areas;
+import com.pinyougou.pojo.Cities;
+import com.pinyougou.pojo.Provinces;
 import com.pinyougou.pojo.User;
 import java.util.List;
 import java.io.Serializable;
@@ -36,4 +39,14 @@ public interface UserService {
 
 	/** 检验验证码是否正确 */
 	boolean checkSmsCode(String phone, String code);
+
+    List<Provinces> findProvince();
+
+	List<Cities> findCityByProvinceId(String provinceId);
+
+	List<Areas> findAreaByCityId(String cityId);
+
+	User findInfoByUserId(String userId);
+
+	void saveUserInfo(User user);
 }
