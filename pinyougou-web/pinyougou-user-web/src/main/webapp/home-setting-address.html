@@ -238,10 +238,22 @@
                                 <td>{{data.mobile}}</td>
                                 <td>
                                     <a data-toggle="modal" data-target=".edit1"
-                                       data-keyboard="false" ng-click="getUserAddress($index)"
+                                       data-keyboard="false" ng-click="getUserAddress(data)"
                                        class="update">编辑</a>
-                                    <a href="#">删除</a>
-                                    <a href="#">设为默认</a>
+
+                                    <a href="#" ng-click="deleteById($index)"
+                                       ng-if="data.isDefault != 1"
+                                       style="{{data.isDefault==1?'pointer-events:none;color:black':''}}"
+                                       >删除</a>
+
+                                    <a href="javascript:;" ng-if="data.isDefault==1"
+                                       style="{{data.isDefault==1?'pointer-events:none;color:black':''}}">默认地址</a>
+                                    <a href="#" ng-click="modity($index)"
+                                       ng-if="data.isDefault != 1"
+                                       style="{{data.isDefault==1?'pointer-events:none;color:black':''}}"
+                                       >设为默认地址
+                                    </a>
+
                                 </td>
                             </tr>
 
@@ -253,7 +265,7 @@
                     <!--编辑地址弹出层-->
                     <div tabindex="-1" role="dialog" data-hasfoot="false" class="sui-modal hide fade edit1"
                          style="width:580px;">
-                        <div class="modal-dialog">
+                        <div class="modal-dialog">{{updateaddress}}
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" data-dismiss="modal" aria-hidden="true" class="sui-close">×
@@ -265,7 +277,9 @@
                                         <div class="control-group">
                                             <label class="control-label" >收货人：</label>
                                             <div class="controls">
-                                                <input type="text" class="input-medium" value={{updateaddress.contact}}>
+                                                <input type="text" class="input-medium"
+                                                       ng-model="updateaddress.contact"
+                                                       value={{updateaddress.contact}}>
                                             </div>
                                         </div>
                                         <div class="control-group">
@@ -274,28 +288,24 @@
                                                 <div data-toggle="distpicker">
                                                     <div class="form-group area">
                                                         <select class="form-control"
-                                                                ng-model="address.provinceId"
+                                                                ng-model="updateaddress.provinceId"
                                                                 ng-options="i.provinceId as i.province for i in provincesList"
                                                         >
-                                                            <option value = {{updateaddress.provinces.province}}
-                                                                    ng-model= {{updateaddress.provinces.province}}
-                                                            >{{updateaddress.provinces.province}}</option>
+
                                                         </select>
                                                     </div>
                                                     <div class="form-group area">
                                                         <select class="form-control"
-                                                                ng-model="address.cityId"
+                                                                ng-model="updateaddress.cityId"
                                                                 ng-options="i.cityId as i.city for i in citiesList"
                                                         >
-                                                            <option value ={{updateaddress.cities.city}}>==请选择市==</option>
                                                         </select>
                                                     </div>
                                                     <div class="form-group area">
                                                         <select class="form-control"
-                                                                ng-model="address.townId"
+                                                                ng-model="updateaddress.townId"
                                                                 ng-options="i.areaId as i.area for i in areasList"
                                                         >
-                                                            <option value= {{updateaddress.areas.area}}>==请选择区==</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -304,13 +314,17 @@
                                         <div class="control-group">
                                             <label class="control-label">详细地址：</label>
                                             <div class="controls">
-                                                <input type="text" class="input-large" value={{updateaddress.address}}>
+                                                <input type="text" class="input-large"
+                                                       ng-model="updateaddress.address"
+                                                       value={{updateaddress.address}}>
                                             </div>
                                         </div>
                                         <div class="control-group">
                                             <label class="control-label">联系电话：</label>
                                             <div class="controls">
-                                                <input type="text" class="input-medium" value={{updateaddress.mobile}}>
+                                                <input type="text" class="input-medium"
+                                                       ng-model="updateaddress.mobile"
+                                                       value={{updateaddress.mobile}}>
                                             </div>
                                         </div>
                                         <div class="control-group">
@@ -322,7 +336,9 @@
                                         <div class="control-group">
                                             <label class="control-label">地址别名：</label>
                                             <div class="controls">
-                                                <input type="text" class="input-medium" value={{updateaddress.alias}}>
+                                                <input type="text" class="input-medium"
+                                                       ng-model="updateaddress.alias"
+                                                       value={{updateaddress.alias}}>
                                             </div>
                                             <div class="othername">
                                                 建议填写常用地址：<a href="#" class="sui-btn btn-default">家里</a>　<a href="#"
@@ -336,7 +352,8 @@
 
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" data-ok="modal" class="sui-btn btn-primary btn-large">确定
+                                    <button type="button" data-ok="modal" ng-click = "update()"
+                                            class="sui-btn btn-primary btn-large">确定
                                     </button>
                                     <button type="button" data-dismiss="modal" class="sui-btn btn-default btn-large">
                                         取消
