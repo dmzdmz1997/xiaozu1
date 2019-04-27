@@ -1,5 +1,6 @@
 package com.pinyougou.mapper;
 
+import org.apache.ibatis.annotations.Select;
 import tk.mybatis.mapper.common.Mapper;
 
 import com.pinyougou.pojo.Areas;
@@ -19,6 +20,6 @@ public interface AreasMapper extends Mapper<Areas>{
     List<Areas> findAll();
 
     List<Areas> findAllAreas();
-
+    @Select("SELECT * FROM tb_areas WHERE cityid =#{cityId} ")
     List<Areas> findAreasByCityId(String parentId);
 }
